@@ -17,9 +17,15 @@ const ButtonStyled = styled.button`
   user-select: none;
   cursor:pointer;
 `;
-function ButtonComp({ bg, fs, width, height, children }) {
+function ButtonComp({ bg, fs, width, height, children, onClick }) {
   return (
-    <ButtonStyled background={bg} font={fs} width={width} height={height}>
+    <ButtonStyled
+      background={bg}
+      font={fs}
+      width={width}
+      height={height}
+      onClick={onClick}
+    >
       {children}
     </ButtonStyled>
   );

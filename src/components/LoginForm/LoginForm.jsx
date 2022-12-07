@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import InputField from '../InputField';
 import userImg from '../../assets/img/user.jpg';
 import passwordImg from '../../assets/img/password.jpg';
 import camera from '../../assets/img/camera.jpg';
 import ButtonComp from '../Button';
+import Checkbox from '../Checkbox';
 // import Img from '../InputField';
 const FormWrapper = styled.form`
   display: flex;
@@ -42,15 +43,16 @@ const WrapImg = styled.div`
   border: 2px solid #fbbc1a;
 `;
 
-const Checkbox = styled.input`
-  display: inline-block;
-  cursor: pointer;
-  height: 20px;
-  clip: rect(0 0 0 0);
-  // clip-path: inset(50%);
-  padding: 5px;
-`;
-const WrapperCheckbox = styled.div`
+// const Checkbox = styled.input`
+//   display: inline-block;
+//   cursor: pointer;
+//   height: 20px;
+//   clip: rect(0 0 0 0);
+//   // clip-path: inset(50%);
+//   padding: 5px;
+// `;
+
+const WrapperCheckbox = styled.label`
   display: flex;
   color: black;
   margin-top: 16px;
@@ -69,6 +71,10 @@ const WrapInputForm = styled.div`
 `;
 
 function LoginForm({ isMobile }) {
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
   return (
     <>
       <FormWrapper>
@@ -79,8 +85,13 @@ function LoginForm({ isMobile }) {
           <InputField icon={userImg} placeholder="username" />
           <InputField icon={passwordImg} placeholder="password" type="password" />
         </WrapInputForm>
-        <WrapperCheckbox>
-          <Checkbox type="checkbox" id="remember-me"></Checkbox>
+        <WrapperCheckbox htmlFor="remember-me">
+          <Checkbox
+            type="checkbox"
+            id="remember-me"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          ></Checkbox>
           <Content htmlFor="remember-me">Remember me</Content>
         </WrapperCheckbox>
         <ButtonComp bg="#D9D9D9" fs={22} width={isMobile ? '250px' : '80%'}>
