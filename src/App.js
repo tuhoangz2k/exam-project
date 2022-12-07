@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import DashBoard from './pages/DashBoard/Dashboard';
 import LoginPage from './pages/LoginPage';
-import UserPage from './pages/Dashboard';
 
 function App() {
   const [windowSize, setWindowSize] = useState({
@@ -31,7 +31,7 @@ function App() {
   return (
     <div>
       {/* <LoginPage isMobile={isMobile} /> */}
-      <UserPage isMobile={isMobile} />
+      <DashBoard isMobile={isMobile} />
     </div>
   );
 }
