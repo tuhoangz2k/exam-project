@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import LoginPage from './pages/LoginPage';
+import UserPage from './pages/UserPage';
 
 function App() {
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleSize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener('resize', handleSize);
+    handleSize();
+    return () => window.removeEventListener('resize', handleSize);
+  }, []);
+  useEffect(() => {
+    if (windowSize > 739) {
+      setIsMobile(false);
+    } else {
+      setIsMobile(true);
+    }
+  }, [windowSize]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <LoginPage isMobile={isMobile} />
+      {/* <UserPage /> */}
     </div>
   );
 }
