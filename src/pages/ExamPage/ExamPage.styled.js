@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const ExamWrapper = styled.div`
   display: flex;
   min-height: 100vh;
+  @media (max-width: 739px) {
+    margin-top: 3.6em;
+  }
 `;
 
 export const ExamQuestionWrap = styled.div`
@@ -19,6 +22,7 @@ export const ExamQuestionListWrap = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 60px 20px;
   position: relative;
+  z-index: 10;
   @media (max-width: 739px) {
     position: fixed;
     width: unset;
@@ -26,6 +30,7 @@ export const ExamQuestionListWrap = styled.div`
     right: 30px;
     top: 150px;
     bottom: 50px;
+    transform: ${(props) => (props.isOpen ? 'translateX(0)' : 'translateX(120%)')};
   }
 `;
 export const Wrap = styled.div`

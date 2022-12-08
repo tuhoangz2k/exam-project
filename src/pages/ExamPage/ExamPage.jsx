@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProgressComp from '../../components/ProgressComp/ProgressComp';
 import ContentQuestion from './components/ContentQuestion';
 import Header from '../../components/Header';
@@ -13,13 +13,15 @@ import {
   Title,
   Wrap,
 } from './ExamPage.styled';
+import { Modal } from '../../components/Header/Header.styled';
 
 const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
 function ExamPage() {
+  const [isOpenMenu, setIsOpenMenu] = useState(true);
+  console.log(isOpenMenu);
   return (
     <>
-      <Header content="Làm bài thi" />
+      <Header content="Làm bài thi" setIsOpenMenu={setIsOpenMenu} />
       <ExamWrapper>
         <ExamQuestionWrap>
           <ExamQuestionHead>
@@ -30,7 +32,7 @@ function ExamPage() {
           <ContentQuestion />
         </ExamQuestionWrap>
 
-        <ExamQuestionListWrap>
+        <ExamQuestionListWrap isOpen={isOpenMenu}>
           <Wrap>
             {questions.map((item, index) => (
               <ExamQuestionChangeBtn key={index}>{item}</ExamQuestionChangeBtn>
@@ -39,6 +41,7 @@ function ExamPage() {
           <CompletedBtn>Nộp bài</CompletedBtn>
         </ExamQuestionListWrap>
       </ExamWrapper>
+      <Modal isOpen={isOpenMenu} onClick={() => setIsOpenMenu(false)} />
     </>
   );
 }
