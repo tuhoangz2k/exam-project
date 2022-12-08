@@ -22,14 +22,16 @@ const WrapInput = styled.span`
 `;
 
 const WrapImg = styled.div`
-  width: 115px;
+  width: 110px;
   height: 100%;
   border-radius: 4px 0px 0px 4px;
-  background-color: #f3f1f1;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const Img = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 45%;
   object-fit: cover;
   object-position: center;
 `;

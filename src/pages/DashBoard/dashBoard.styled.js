@@ -19,7 +19,7 @@ export const UserContainer = styled.div`
     top: 0;
     left: 0;
     bottom: 0;
-    width: 40%;
+    width: 52%;
     z-index: 10;
   }
   @media (min-width: 740px) {
