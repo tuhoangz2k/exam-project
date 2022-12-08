@@ -58,6 +58,7 @@ const WrapExamList = styled.div`
   }
   @media (max-width: 739px) {
     padding: 10px 15px;
+    grid-template-columns: 1fr;
   }
 `;
 

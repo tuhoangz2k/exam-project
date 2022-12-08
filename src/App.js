@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard/Dashboard';
+import ExamPage from './pages/ExamPage/ExamPage';
 import LoginPage from './pages/LoginPage';
 
 function App() {
@@ -29,10 +31,14 @@ function App() {
   }, [windowSize]);
 
   return (
-    <div>
-      {/* <LoginPage isMobile={isMobile} /> */}
-      <DashBoard isMobile={isMobile} />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/exam" element={<ExamPage />} />
+      </Routes>
+    </>
   );
 }
 
