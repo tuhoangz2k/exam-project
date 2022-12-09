@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard/Dashboard';
 import ExamPage from './pages/ExamPage/ExamPage';
+import Finish from './pages/Finish/Finish';
 import LoginPage from './pages/LoginPage';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/exam" element={<ExamPage />} />
+        <Route path="/finish" element={<Finish />} />
       </Routes>
     </>
   );
