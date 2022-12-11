@@ -26,7 +26,6 @@ export const options = [
 ];
 
 function DashBoard({ isMobile }) {
-  // console.log(isMobile);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   return (
     <>

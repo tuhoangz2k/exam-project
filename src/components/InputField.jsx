@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 const Input = styled.input`
   background-color: #f3f1f1;
   border: none;
@@ -14,6 +13,7 @@ const WrapInput = styled.span`
   height: 60px;
   display: flex;
   overflow: hidden;
+  position: relative;
   border-radius: 4px;
   @media (max-width: 739px) {
     width: 250px;
@@ -35,15 +35,28 @@ export const Img = styled.img`
   object-fit: cover;
   object-position: center;
 `;
-
-function InputField({ icon, placeholder, type }) {
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
+  /* position: absolute;
+  left: 0;
+  right: 0;
+  top: 110%;
+  z-index: 11; */
+`;
+function InputField({ icon, placeholder, type = 'text', register, name, errors }) {
   return (
-    <WrapInput>
-      <WrapImg>
-        <Img src={icon} alt="" />
-      </WrapImg>
-      <Input placeholder={placeholder} type={type ? type : 'text'} />
-    </WrapInput>
+    <div>
+      <WrapInput>
+        <WrapImg>
+          <Img src={icon} alt="" />
+        </WrapImg>
+        <Input placeholder={placeholder} type={type} {...register(name)} />
+      </WrapInput>
+      {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
+    </div>
   );
 }
 

@@ -6,3 +6,7 @@ export const questions = [
     checked: false,
   },
 ];
+export const USERS = [
+  { id: 'admin1', username: 'admin123', password: '123456', power: 'admin' },
+  { id: 'user1', username: 'user123', password: '123456', power: 'user' },
+];
