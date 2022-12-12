@@ -37,7 +37,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/exam" element={<ExamPage />} />
+        <Route path="/exam/:examId/question/:questionId" element={<ExamPage />} />
         <Route path="/finish" element={<Finish />} />
       </Routes>
     </>

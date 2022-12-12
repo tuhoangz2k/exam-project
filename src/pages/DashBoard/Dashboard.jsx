@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useNavigate, Navigate } from 'react-router-dom';
+
 import DashboardHeader from '../../components/Header';
 import { Modal } from '../../components/Header/Header.styled';
 import ExamListComp from '../../components/ExamListComp/ExamListComp';
@@ -18,8 +20,11 @@ import {
   Wrapper,
   WrapSearchInput,
 } from './dashBoard.styled';
+import { useSelector } from 'react-redux';
+import { selectExamList, selectUser } from '../../app/reduxSelector';
 
 export const options = [
+  { name: 'All', value: 'all' },
   { name: 'Difficult', value: 'difficult' },
   { name: 'Easy', value: 'easy' },
   { name: 'Normal', value: 'normal' },
@@ -27,6 +32,46 @@ export const options = [
 
 function DashBoard({ isMobile }) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [difficulty, setDifficulty] = useState('all');
+  const [searchInputValue, setSearchInputValue] = useState('');
+  const timeoutRef = useRef();
+  const [filters, setFilters] = useState({
+    difficulty: 'all',
+    search: '',
+  });
+  const examList = useSelector(selectExamList).examList;
+  const navigated = useNavigate();
+  const isLogin = useSelector(selectUser).userId;
+  if (!isLogin) return <Navigate to="/login" replace={true} />;
+
+  function handleEnterExam(examId) {
+    navigated(`/exam/${examId}/question/${examId}question1`);
+  }
+  const handleOnchangeFilter = (e) => {
+    const value = e.target.value;
+    setDifficulty(value);
+    setFilters({ ...filters, difficulty: value });
+  };
+  const handleSearchInputChange = (e) => {
+    const value = e.target.value;
+    setSearchInputValue(value);
+  };
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const filterExamList = useMemo(() => {
+    return examList?.filter((exam) => {
+      const dificultCondition = difficulty === 'all' || difficulty === exam.difficulty;
+      const searchValue = searchInputValue.trim().toLowerCase();
+      return dificultCondition && exam.describe.toLowerCase().includes(searchValue);
+    });
+  }, [filters]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (timeoutRef.timeoutId) clearTimeout(timeoutRef.timeoutId);
+
+    timeoutRef.timeoutId = setTimeout(() => {
+      setFilters({ ...filters, search: searchInputValue });
+    }, 430);
+  }, [searchInputValue]);
   return (
     <>
       {<DashboardHeader setIsOpenMenu={setIsOpenMenu} content="Dashboard" />}
@@ -37,22 +82,26 @@ function DashBoard({ isMobile }) {
         <ExamsContent>
           <WrapFilters>
             <WrapSearchInput>
-              <SearchInput placeholder="Search"></SearchInput>
+              <SearchInput
+                placeholder="Search"
+                value={searchInputValue}
+                onChange={handleSearchInputChange}
+              />
               <SearchIconWrap>
                 {/* <SearchIcon src={SearchIcon} /> */}
                 <AiOutlineSearch />
               </SearchIconWrap>
             </WrapSearchInput>
-            <FilterSelect>
+            <FilterSelect onChange={handleOnchangeFilter}>
               {options.map((option, index) => (
-                <Option key={index} value="">
+                <Option key={index} value={option.value}>
                   {option.name}
                 </Option>
               ))}
             </FilterSelect>
           </WrapFilters>
           <ExamListContainer>
-            <ExamListComp />
+            <ExamListComp handleEnterExam={handleEnterExam} data={filterExamList} />
           </ExamListContainer>
           <PaginationComp></PaginationComp>
         </ExamsContent>

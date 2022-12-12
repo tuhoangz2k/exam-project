@@ -1,50 +1,7 @@
 import React from 'react';
 import ExamComp from '../ExamComp/ExamComp';
 import styled from 'styled-components';
-const examList = [
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-  {
-    description: 'Kiểm tra bảo mật thông tin',
-    time: '7 phút',
-    pointsOfMe: 200,
-    totalPoints: 250,
-    star: 4,
-  },
-];
+
 const WrapExamList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -66,13 +23,17 @@ const WrapExam = styled.div`
   border: 1px solid #000000;
   border-radius: 4px;
   padding: 1.5em 1em;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
-function ExamListComp() {
+function ExamListComp({ handleEnterExam, data }) {
   return (
     <WrapExamList>
-      {examList.map((exam, index) => (
+      {data.map((exam, index) => (
         <WrapExam key={index}>
-          <ExamComp data={exam} />
+          <ExamComp data={exam} handleEnterExam={handleEnterExam} />
         </WrapExam>
       ))}
     </WrapExamList>

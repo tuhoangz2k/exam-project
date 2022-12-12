@@ -12,13 +12,16 @@ import point from '../../assets/img/point.svg';
 import clock from '../../assets/img/clock.svg';
 
 const rating = new Array(5).fill(2);
-function ExamComp({ data }) {
+function ExamComp({ data, handleEnterExam }) {
+  const navigatedExam = () => {
+    if (handleEnterExam) handleEnterExam(data.id);
+  };
   return (
-    <div>
-      <Title>{data.description}</Title>
+    <div onClick={navigatedExam}>
+      <Title>{data.describe}</Title>
       <ContentStyled>
         <WrapInfor>
-          <img src={clock} alt="" width="26" height="31" color="#909090" />
+          <img src={clock} alt="" width="25" height="25" color="#909090" />
           <TypographyStyled size={16}>{data.time}</TypographyStyled>
         </WrapInfor>
         <WrapInfor>
@@ -33,7 +36,7 @@ function ExamComp({ data }) {
           <AiFillStar
             size={22}
             key={index}
-            color={`${index + 1 <= data.star ? '#909090' : 'white'}`}
+            color={`${index + 1 <= data.rating ? '#909090' : 'white'}`}
           />
         ))}
       </WrapStar>
