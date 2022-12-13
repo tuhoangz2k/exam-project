@@ -10,12 +10,17 @@ export const answerListSlice = createSlice({
   name: 'answerList',
   initialState,
   reducers: {
-    addAnswer: (state, payload) => {},
-    overWriteAnswer: (state, payload) => {},
+    addAnswer: (state, action) => {
+      state = {
+        ...state,
+        answerQuestions: { ...state.answerQuestions, ...action.payload },
+      };
+    },
+    overWriteAnswer: (state, action) => {},
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = answerListSlice.actions;
+export const { addAnswer, overWriteAnswer } = answerListSlice.actions;
 
 export default answerListSlice.reducer;

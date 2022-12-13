@@ -73,5 +73,6 @@ export const DirectionBtn = styled.button`
   text-align: center;
   bottom: 80px;
   left: 50%;
+  cursor: pointer;
   transform: translateX(-50%);
 `;

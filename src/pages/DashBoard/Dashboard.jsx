@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
-
+import queryString from 'query-string';
 import DashboardHeader from '../../components/Header';
 import { Modal } from '../../components/Header/Header.styled';
 import ExamListComp from '../../components/ExamListComp/ExamListComp';
@@ -34,14 +34,12 @@ function DashBoard({ isMobile }) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [difficulty, setDifficulty] = useState('all');
   const [searchInputValue, setSearchInputValue] = useState('');
-  const timeoutRef = useRef();
-  const [filters, setFilters] = useState({
-    difficulty: 'all',
-    search: '',
-  });
   const location = useLocation();
-  console.log(location);
+  const timeoutRef = useRef();
+
+  const [filters, setFilters] = useState({ difficulty, search: '' });
   const examList = useSelector(selectExamList).examList;
+
   const navigated = useNavigate();
   const isLogin = useSelector(selectUser).userId;
   if (!isLogin) return <Navigate to="/login" replace={true} />;
@@ -74,6 +72,12 @@ function DashBoard({ isMobile }) {
       setFilters({ ...filters, search: searchInputValue });
     }, 430);
   }, [searchInputValue]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    navigated({ pathname: location.pathname, search: queryString.stringify(filters) });
+  }, [filters]);
+
   return (
     <>
       {<DashboardHeader setIsOpenMenu={setIsOpenMenu} content="Dashboard" />}
