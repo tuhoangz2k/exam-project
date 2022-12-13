@@ -16,8 +16,9 @@ import {
 import { Modal } from '../../components/Header/Header.styled';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getExam } from '../../hooks/common';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../app/reduxSelector';
+import { addAnswer, setIsFinish } from '../Finish/finishSlice';
 
 function ExamPage() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -25,8 +26,11 @@ function ExamPage() {
   const [data, setData] = useState({});
   const isLogin = useSelector(selectUser).userId;
   const params = useParams();
-  // const location = useLocation();
+  const dispatch = useDispatch();
   const navigated = useNavigate();
+  const handleAddAnswer = (value) => {
+    dispatch(addAnswer(value));
+  };
   useEffect(() => {
     setData(getExam(params?.examId));
     const questionIdx = data?.questions?.findIndex(
@@ -38,6 +42,11 @@ function ExamPage() {
     navigated(
       `/exam/${params?.examId}/question/${data?.questions?.[newQuestionIdx]?.id}`,
     );
+  };
+
+  const handleFinishExam = () => {
+    dispatch(setIsFinish(true));
+    navigated('/finish');
   };
   if (!isLogin) return <Navigate to="/login" />;
   let counter = data?.time * 360;
@@ -59,6 +68,7 @@ function ExamPage() {
             onChanceQuestion={handleChangeQuestion}
             currentIndex={currentIndex}
             totalLength={data.questions?.length}
+            handleAddAnswer={handleAddAnswer}
           />
         </ExamQuestionWrap>
 
@@ -74,7 +84,7 @@ function ExamPage() {
               </ExamQuestionChangeBtn>
             ))}
           </Wrap>
-          <CompletedBtn>Nộp bài</CompletedBtn>
+          <CompletedBtn onClick={handleFinishExam}>Nộp bài</CompletedBtn>
         </ExamQuestionListWrap>
       </ExamWrapper>
       <Modal isOpen={isOpenMenu} onClick={() => setIsOpenMenu(false)} />

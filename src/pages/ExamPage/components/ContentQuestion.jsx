@@ -3,18 +3,30 @@ import ButtonComp from '../../../components/Button';
 import AnswerContent from './AnswerContent';
 import { AnswerWrapper, QuestionTitle, Wrapper } from './ContentQuestion.styled';
 
-function ContentQuestion({ data, onChanceQuestion, currentIndex, totalLength }) {
+function ContentQuestion({
+  data,
+  onChanceQuestion,
+  currentIndex,
+  totalLength,
+  handleAddAnswer,
+}) {
   const handleChange = (newIdx) => {
     if (onChanceQuestion) onChanceQuestion(newIdx);
   };
-
   return (
     <Wrapper>
       <QuestionTitle>
         Câu {currentIndex + 1}: {data?.title}
       </QuestionTitle>
       {data?.answers?.map((answer, index) => (
-        <AnswerContent key={index} label={answer.description} index={index} />
+        <AnswerContent
+          key={index}
+          label={answer.description}
+          index={index}
+          name={data?.id}
+          handleAddAnswer={handleAddAnswer}
+          value={answer?.id}
+        />
       ))}
       <AnswerWrapper>
         <ButtonComp

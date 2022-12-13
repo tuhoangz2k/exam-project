@@ -60,4 +60,7 @@ export const WrapInputForm = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  @media (max-width: 739px) {
+    width: 100%;
+  }
 `;

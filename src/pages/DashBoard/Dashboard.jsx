@@ -20,8 +20,9 @@ import {
   Wrapper,
   WrapSearchInput,
 } from './dashBoard.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectExamList, selectUser } from '../../app/reduxSelector';
+import { setOpenExam } from '../Finish/finishSlice';
 
 export const options = [
   { name: 'All', value: 'all' },
@@ -36,16 +37,16 @@ function DashBoard({ isMobile }) {
   const [searchInputValue, setSearchInputValue] = useState('');
   const location = useLocation();
   const timeoutRef = useRef();
-
+  const dispatch = useDispatch();
   const [filters, setFilters] = useState({ difficulty, search: '' });
   const examList = useSelector(selectExamList).examList;
-
   const navigated = useNavigate();
   const isLogin = useSelector(selectUser).userId;
   if (!isLogin) return <Navigate to="/login" replace={true} />;
 
-  function handleEnterExam(examId) {
+  function handleEnterExam(examId, title) {
     navigated(`/exam/${examId}/question/${examId}question1`);
+    dispatch(setOpenExam({ id: examId, title }));
   }
   const handleOnchangeFilter = (e) => {
     const value = e.target.value;

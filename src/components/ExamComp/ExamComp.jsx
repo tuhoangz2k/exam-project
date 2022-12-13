@@ -14,7 +14,7 @@ import clock from '../../assets/img/clock.svg';
 const rating = new Array(5).fill(2);
 function ExamComp({ data, handleEnterExam }) {
   const navigatedExam = () => {
-    if (handleEnterExam) handleEnterExam(data.id);
+    if (handleEnterExam) handleEnterExam(data.id, data.describe);
   };
   return (
     <div onClick={navigatedExam}>

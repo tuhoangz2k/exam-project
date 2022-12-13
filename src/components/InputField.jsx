@@ -7,6 +7,9 @@ const Input = styled.input`
   flex: 1;
   padding-left: 20px;
   font-size: 20px;
+  /* @media (max-width: 739px) {
+    width: 100%;
+  } */
 `;
 const WrapInput = styled.span`
   width: 433px;
@@ -16,7 +19,7 @@ const WrapInput = styled.span`
   position: relative;
   border-radius: 4px;
   @media (max-width: 739px) {
-    width: 250px;
+    width: 100%;
     height: 55px;
   }
 `;
@@ -29,6 +32,10 @@ const WrapImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 739px) {
+    width: 100%;
+    max-width: 55px;
+  }
 `;
 export const Img = styled.img`
   width: 45%;
@@ -45,6 +52,9 @@ export const ErrorMessage = styled.p`
   right: 0;
   top: 110%;
   z-index: 11; */
+  @media (max-width: 739px) {
+    text-align: center;
+  }
 `;
 function InputField({ icon, placeholder, type = 'text', register, name, errors }) {
   return (

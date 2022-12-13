@@ -19,6 +19,7 @@ import {
   WrapperCheckbox,
   ErrorMessage,
 } from './LoginForm.styled';
+import { selectUser } from '../../app/reduxSelector';
 // import Img from '../InputField';
 
 const loginSchema = yup.object({
@@ -35,6 +36,7 @@ const loginSchema = yup.object({
 function LoginForm({ isMobile }) {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -44,15 +46,24 @@ function LoginForm({ isMobile }) {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
+
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
+  const isUser = useSelector(selectUser).userId;
   const handleSubmitForm = (value) => {
-    console.log(value);
-    const newValue = { ...value, setError };
+    const newValue = { ...value, name: ['username', 'password'] };
     dispatch(login(newValue));
-    // setError('username',{message:'password or username are not match'})
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    if (!isUser) {
+      setError('username', {
+        message: 'You must have an account',
+      });
+      setError('password', {
+        message: 'You must have an account',
+      });
+    }
   };
 
   return (

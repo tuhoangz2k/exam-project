@@ -8,10 +8,16 @@ const initialState = {
 export const examListSlice = createSlice({
   name: 'exams',
   initialState,
-  reducers: {},
+  reducers: {
+    updatePoints: (state, action) => {
+      const exam = state.examList.find((exam) => exam.id === action.payload?.examId);
+      console.log(action.payload.pointOfMe);
+      exam.pointsOfMe = action.payload.pointOfMe;
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = examListSlice.actions;
+export const { updatePoints } = examListSlice.actions;
 
 export default examListSlice.reducer;

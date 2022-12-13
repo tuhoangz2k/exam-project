@@ -19,9 +19,7 @@ export const userSlice = createSlice({
         state.userId = User.id;
         localStorage.setItem('userId', JSON.stringify(User.id));
       } else {
-        action.payload.setError('username', {
-          message: 'password or username are not match',
-        });
+        state.userId = null;
       }
     },
     logout: (state, action) => {
