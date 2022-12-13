@@ -1,4 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { selectUser } from '../../app/reduxSelector';
+import { checkLogin } from '../../hooks';
 import {
   FinishWrap,
   ContentContainer,
@@ -11,6 +15,8 @@ import {
 } from './finish.styled';
 
 function Finish() {
+  const isLogin = useSelector(selectUser).userId;
+  if (!isLogin) return <Navigate to="/login" />;
   return (
     <FinishWrap>
       <ContentContainer>

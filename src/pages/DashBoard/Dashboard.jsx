@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 
 import DashboardHeader from '../../components/Header';
 import { Modal } from '../../components/Header/Header.styled';
@@ -39,6 +39,8 @@ function DashBoard({ isMobile }) {
     difficulty: 'all',
     search: '',
   });
+  const location = useLocation();
+  console.log(location);
   const examList = useSelector(selectExamList).examList;
   const navigated = useNavigate();
   const isLogin = useSelector(selectUser).userId;

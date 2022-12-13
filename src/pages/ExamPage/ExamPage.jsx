@@ -14,40 +14,64 @@ import {
   Wrap,
 } from './ExamPage.styled';
 import { Modal } from '../../components/Header/Header.styled';
-import { useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getExam } from '../../hooks/common';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../app/reduxSelector';
 
-const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 function ExamPage() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [data, setData] = useState({});
+  const isLogin = useSelector(selectUser).userId;
   const params = useParams();
+  // const location = useLocation();
+  const navigated = useNavigate();
   useEffect(() => {
     setData(getExam(params?.examId));
-  }, [params]);
+    const questionIdx = data?.questions?.findIndex(
+      (question) => question.id === params?.questionId,
+    );
+    setCurrentIndex(questionIdx);
+  }, [params, data]);
+  const handleChangeQuestion = (newQuestionIdx) => {
+    navigated(
+      `/exam/${params?.examId}/question/${data?.questions?.[newQuestionIdx]?.id}`,
+    );
+  };
+  if (!isLogin) return <Navigate to="/login" />;
   let counter = data?.time * 360;
-
-  // console.log(data);
   // console.log(counter);
-  const nowDate = new Date();
-  console.log(nowDate);
+  // const nowDate = new Date();
+  // console.log(nowDate);
   return (
     <>
       <Header content="Làm bài thi" setIsOpenMenu={setIsOpenMenu} />
       <ExamWrapper>
         <ExamQuestionWrap>
           <ExamQuestionHead>
-            <Title>{data.describe}</Title>
+            <Title> {data.describe}</Title>
             <CountTime>Con lai:14 phut 22 giay</CountTime>
             <ProgressComp bg="#41C54E" percent={90} />
           </ExamQuestionHead>
-          <ContentQuestion />
+          <ContentQuestion
+            data={data?.questions?.[currentIndex]}
+            onChanceQuestion={handleChangeQuestion}
+            currentIndex={currentIndex}
+            totalLength={data.questions?.length}
+          />
         </ExamQuestionWrap>
 
         <ExamQuestionListWrap isOpen={isOpenMenu}>
           <Wrap>
-            {questions.map((item, index) => (
-              <ExamQuestionChangeBtn key={index}>{item}</ExamQuestionChangeBtn>
+            {data?.questions?.map((_, index) => (
+              <ExamQuestionChangeBtn
+                key={index}
+                onClick={() => handleChangeQuestion(index)}
+                style={{ backgroundColor: index === currentIndex ? '#92FD9D' : '' }}
+              >
+                {index + 1}
+              </ExamQuestionChangeBtn>
             ))}
           </Wrap>
           <CompletedBtn>Nộp bài</CompletedBtn>

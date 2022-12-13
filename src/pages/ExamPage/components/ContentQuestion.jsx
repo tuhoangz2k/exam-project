@@ -2,27 +2,41 @@ import React from 'react';
 import ButtonComp from '../../../components/Button';
 import AnswerContent from './AnswerContent';
 import { AnswerWrapper, QuestionTitle, Wrapper } from './ContentQuestion.styled';
-const answers = [
-  ' 12 ngày nếu làm đủ cả năm',
-  ' 16 ngày nếu làm đủ cả năm',
-  ' Không có nghỉ phép vẫn hưởng lương',
-  ' 8 ngày nếu làm đủ cả năm',
-];
-function ContentQuestion() {
+
+function ContentQuestion({ data, onChanceQuestion, currentIndex, totalLength }) {
+  const handleChange = (newIdx) => {
+    if (onChanceQuestion) onChanceQuestion(newIdx);
+  };
+
   return (
     <Wrapper>
       <QuestionTitle>
-        Câu 3. Nhân viên chính thức của công ty Amela được nghỉ phép (có hưởng lương) bao
-        nhiêu ngày một năm?
+        Câu {currentIndex + 1}: {data?.title}
       </QuestionTitle>
-      {answers.map((answer, index) => (
-        <AnswerContent key={index} label={answer} index={index} />
+      {data?.answers?.map((answer, index) => (
+        <AnswerContent key={index} label={answer.description} index={index} />
       ))}
       <AnswerWrapper>
-        <ButtonComp bg="#EEE7A9" width="120px" height="50px">
+        <ButtonComp
+          bg="#EEE7A9"
+          width="120px"
+          height="50px"
+          onClick={() => {
+            if (currentIndex === 0) return;
+            handleChange(currentIndex - 1);
+          }}
+        >
           Câu trước
         </ButtonComp>
-        <ButtonComp bg="#EEE7A9" width="120px" height="50px">
+        <ButtonComp
+          bg="#EEE7A9"
+          width="120px"
+          height="50px"
+          onClick={() => {
+            if (currentIndex === totalLength - 1) return;
+            handleChange(currentIndex + 1);
+          }}
+        >
           Câu sau
         </ButtonComp>
       </AnswerWrapper>
