@@ -14,6 +14,13 @@ export const examListSlice = createSlice({
       console.log(action.payload.pointOfMe);
       exam.pointsOfMe = action.payload.pointOfMe;
     },
+    deleteExam: (state, action) => {
+      const exam = state.examList.findIndex((exam) => exam.id === action.payload);
+      state.examList.splice(exam, 1);
+    },
+    addExam: (state, action) => {
+      state.examList.push(action.payload);
+    },
   },
 });
 

@@ -14,7 +14,7 @@ function AnswerContent({ label, index, name, handleAddAnswer, value }) {
   const isChecked = useSelector(selectAnswersQuestion)[name] === value;
   return (
     <Wrapper htmlFor={value}>
-      <input
+      <RadioInput
         type="radio"
         value={value}
         onChange={handleChange}
@@ -22,6 +22,7 @@ function AnswerContent({ label, index, name, handleAddAnswer, value }) {
         checked={isChecked}
         id={value}
       />
+      <CheckMark />
       <span>
         {alphabet[index]} {label}
       </span>

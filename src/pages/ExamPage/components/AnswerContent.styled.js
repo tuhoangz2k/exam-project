@@ -15,29 +15,33 @@ export const Wrapper = styled.label`
 `;
 export const CheckMark = styled.span`
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-  &:after {
-    content: '';
-    position: absolute;
-    display: none;
-    top: 9px;
-    left: 9px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: white;
+  top: 25%;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 1px solid #ccc;
+  @media (max-width: 739px) {
+    top: 10%;
   }
 `;
 
 export const RadioInput = styled.input`
-  position: absolute;
   opacity: 0;
+  z-index: 1;
   cursor: pointer;
-  &:checked ${CheckMark}:after {
-    display: block;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  &:hover ~ ${CheckMark} {
+    background: #ccc;
+  }
+  &:checked + ${Wrapper} {
+    background: red;
+    border: 2px solid red;
+  }
+  &:checked + ${CheckMark} {
+    background: green;
+    border: 1px solid blue;
   }
 `;
