@@ -35,6 +35,7 @@ function Finish() {
           infoFinishExam.truthy,
       }),
     );
+    localStorage.removeItem('examStartInfo');
   };
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const infoFinishExam = useSelector(computedPoint);

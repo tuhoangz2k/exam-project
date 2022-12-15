@@ -41,7 +41,16 @@ const LogOutButton = styled.span`
   left: 50%;
   transform: translateX(-50%);
 `;
-function UserComp() {
+const GoToAdminBtn = styled.div`
+  display: inline-block;
+  border: 1px solid black;
+  margin-left: 0.8em;
+  margin-bottom: 1.25em;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+function UserComp({ isAdmin, handleGotoAdmin }) {
   const navigation = useNavigate();
   const userid = useSelector(selectUser);
   const user = useMemo(() => getUser(userid.userId), [userid]);
@@ -56,6 +65,13 @@ function UserComp() {
       </UserAvatarWrap>
       <UserInfor>User: {user?.username}</UserInfor>
       <UserInfor>Points: {user?.points}</UserInfor>
+      <GoToAdminBtn onClick={handleGotoAdmin}>
+        {isAdmin && (
+          <ButtonComp width={'70%'} height={'40px'}>
+            admin
+          </ButtonComp>
+        )}
+      </GoToAdminBtn>
       <LogOutButton onClick={handleLogout}>
         <ButtonComp>Logout</ButtonComp>
       </LogOutButton>

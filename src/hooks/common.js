@@ -6,3 +6,7 @@ export const getUser = (userId) => {
 export const getExam = (examId) => {
   return EXAMLIST.find((exam) => exam.id === examId);
 };
+export const getRole = (userId) => {
+  if (typeof userId === 'string' || userId === 'number')
+    return USERS.find((user) => user.id === userId).power;
+};

@@ -65,9 +65,9 @@ export const ExamQuestionChangeBtn = styled.button`
   justify-content: center;
   border: 2px solid #000000;
   border-radius: 4px;
-  /* background-color: ${(props) => (props.currentIndex ? '#92FD9D' : 'transparent')}; */
+  background-color: ${(props) => (props.isChecked ? '#b6b6b6' : 'transparent')};
   transition: all 0.4s linear;
-  background-color: #b6b6b6;
+  /* background-color: #b6b6b6; */
   width: 40px;
   height: 60px;
   cursor: pointer;

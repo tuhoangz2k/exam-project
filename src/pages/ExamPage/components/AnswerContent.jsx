@@ -1,12 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { selectAnswersQuestion } from '../../../app/reduxSelector';
-const Wrapper = styled.div`
-  & + & {
-    margin-top: 20px;
-  }
-`;
+import { Wrapper, RadioInput, CheckMark } from './AnswerContent.styled';
+
 const alphabet = { 0: 'A', 1: 'B', 2: 'C', 3: 'D' };
 function AnswerContent({ label, index, name, handleAddAnswer, value }) {
   const handleChange = (e) => {
@@ -17,17 +13,18 @@ function AnswerContent({ label, index, name, handleAddAnswer, value }) {
   };
   const isChecked = useSelector(selectAnswersQuestion)[name] === value;
   return (
-    <Wrapper>
+    <Wrapper htmlFor={value}>
       <input
         type="radio"
         value={value}
         onChange={handleChange}
         name={name}
         checked={isChecked}
+        id={value}
       />
-      <label>
+      <span>
         {alphabet[index]} {label}
-      </label>
+      </span>
     </Wrapper>
   );
 }

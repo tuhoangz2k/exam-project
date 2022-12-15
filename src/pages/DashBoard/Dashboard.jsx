@@ -21,8 +21,9 @@ import {
   WrapSearchInput,
 } from './dashBoard.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectExamList, selectUser } from '../../app/reduxSelector';
-import { setOpenExam } from '../Finish/finishSlice';
+import { selectAnswerList, selectExamList, selectUser } from '../../app/reduxSelector';
+import { setOpenExam, setTime } from '../Finish/finishSlice';
+import { getRole } from '../../hooks';
 
 export const options = [
   { name: 'All', value: 'all' },
@@ -40,23 +41,42 @@ function DashBoard({ isMobile }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState({ difficulty, search: '' });
   const examList = useSelector(selectExamList).examList;
+  const examIsDoing = useSelector(selectAnswerList);
   const navigated = useNavigate();
   const isLogin = useSelector(selectUser).userId;
+  const isAdmin = getRole(isLogin) === 'admin';
+  const isStartedExam = useMemo(
+    () => !!JSON.parse(localStorage.getItem('examStartInfo'))?.isStart,
+    [],
+  );
+
   if (!isLogin) return <Navigate to="/login" replace={true} />;
 
-  function handleEnterExam(examId, title) {
+  if (isStartedExam)
+    return (
+      <Navigate
+        to={`/exam/${examIsDoing?.examId}/question/${examIsDoing?.examId}question1`}
+        replace={true}
+      />
+    );
+
+  function handleEnterExam(examId, title, time) {
     navigated(`/exam/${examId}/question/${examId}question1`);
+    dispatch(setTime(time));
     dispatch(setOpenExam({ id: examId, title }));
   }
+
   const handleOnchangeFilter = (e) => {
     const value = e.target.value;
     setDifficulty(value);
     setFilters({ ...filters, difficulty: value });
   };
+
   const handleSearchInputChange = (e) => {
     const value = e.target.value;
     setSearchInputValue(value);
   };
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const filterExamList = useMemo(() => {
     return examList?.filter((exam) => {
@@ -65,6 +85,7 @@ function DashBoard({ isMobile }) {
       return dificultCondition && exam.describe.toLowerCase().includes(searchValue);
     });
   }, [filters]);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (timeoutRef.timeoutId) clearTimeout(timeoutRef.timeoutId);
@@ -79,12 +100,16 @@ function DashBoard({ isMobile }) {
     navigated({ pathname: location.pathname, search: queryString.stringify(filters) });
   }, [filters]);
 
+  const handleGotoAdmin = (e) => {
+    navigated('/admin');
+  };
+
   return (
     <>
       {<DashboardHeader setIsOpenMenu={setIsOpenMenu} content="Dashboard" />}
       <Wrapper>
         <UserContainer isOpen={isOpenMenu}>
-          <UserComp />
+          <UserComp isAdmin={isAdmin} handleGotoAdmin={handleGotoAdmin} />
         </UserContainer>
         <ExamsContent>
           <WrapFilters>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Admin from './pages/AdminPage/Admin';
 import DashBoard from './pages/DashBoard/Dashboard';
 import ExamPage from './pages/ExamPage/ExamPage';
 import Finish from './pages/Finish/Finish';
 import LoginPage from './pages/LoginPage';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
   const [windowSize, setWindowSize] = useState({
@@ -39,6 +41,8 @@ function App() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/exam/:examId/question/:questionId" element={<ExamPage />} />
         <Route path="/finish" element={<Finish />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
   );

@@ -22,7 +22,7 @@ export const EXAMLIST = [
     id: 'exam1',
     difficulty: 'normal',
     describe: 'Kiểm tra bảo mật thông tin',
-    time: 7,
+    time: 2,
     totalPoints: 250,
     pointsOfMe: 0,
     rating: 4,
