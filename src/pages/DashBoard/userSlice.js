@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { USERS } from '../../constants';
-import { checkLogin } from '../../hooks';
+import { checkLogin, getUser } from '../../hooks';
 
 const initialState = {
   userId: checkLogin(USERS),
+  points: 0,
 };
 export const userSlice = createSlice({
   name: 'user',
@@ -12,8 +13,8 @@ export const userSlice = createSlice({
     login: (state, action) => {
       const User = USERS.find(
         (user) =>
-          user.username === action.payload.username &&
-          user.password === action.payload.password,
+          user.username === action.payload?.username &&
+          user.password === action.payload?.password,
       );
       if (User) {
         state.userId = User.id;
@@ -26,10 +27,14 @@ export const userSlice = createSlice({
       state.userId = null;
       localStorage.removeItem('userId');
     },
+    addPoints: (state, action) => {
+      console.log(action.payload);
+      state.points = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = userSlice.actions;
+export const { login, logout, addPoints } = userSlice.actions;
 
 export default userSlice.reducer;

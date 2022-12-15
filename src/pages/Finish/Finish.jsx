@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { selectUser, selectAnswerList, computedPoint } from '../../app/reduxSelector';
 import { updatePoints } from '../../components/ExamListComp/examListSlice';
 import { checkLogin } from '../../hooks';
+import { addPoints } from '../DashBoard/userSlice';
 import {
   FinishWrap,
   ContentContainer,
@@ -26,7 +27,13 @@ function Finish() {
   const handleGohome = (e) => {
     navigated('/dashboard');
     dispatch(setIsFinish(false));
+    console.log(
+      Math.trunc(infoFinishExam?.totalPoints / infoFinishExam?.totalQuestions) *
+        infoFinishExam.truthy,
+    );
+    dispatch(addPoints(totalPoints));
     dispatch(reset());
+
     dispatch(
       updatePoints({
         examId: answerList.examId,
@@ -35,10 +42,15 @@ function Finish() {
           infoFinishExam.truthy,
       }),
     );
+
     localStorage.removeItem('examStartInfo');
   };
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const infoFinishExam = useSelector(computedPoint);
+
+  const totalPoints =
+    Math.trunc(infoFinishExam?.totalPoints / infoFinishExam?.totalQuestions) *
+      infoFinishExam.truthy || 0;
   return (
     <FinishWrap>
       <ContentContainer>
@@ -60,10 +72,7 @@ function Finish() {
             </FlexBox>
           </Content>
           <Point>
-            Điểm số:{' '}
-            {Math.trunc(infoFinishExam?.totalPoints / infoFinishExam?.totalQuestions) *
-              infoFinishExam.truthy}{' '}
-            / {infoFinishExam.totalPoints}
+            Điểm số: {totalPoints} / {infoFinishExam.totalPoints}
           </Point>
         </ContentWrap>
         <DirectionBtn onClick={handleGohome}>Dashboard</DirectionBtn>

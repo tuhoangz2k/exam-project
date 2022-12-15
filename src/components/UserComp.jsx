@@ -64,7 +64,7 @@ function UserComp({ isAdmin, handleGotoAdmin }) {
         <UserAvatar src={Avatar} width="20" height="20" />
       </UserAvatarWrap>
       <UserInfor>User: {user?.username}</UserInfor>
-      <UserInfor>Points: {user?.points}</UserInfor>
+      <UserInfor>Points: {userid?.points}</UserInfor>
       <GoToAdminBtn onClick={handleGotoAdmin}>
         {isAdmin && (
           <ButtonComp width={'70%'} height={'40px'}>

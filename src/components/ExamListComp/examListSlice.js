@@ -11,8 +11,8 @@ export const examListSlice = createSlice({
   reducers: {
     updatePoints: (state, action) => {
       const exam = state.examList.find((exam) => exam.id === action.payload?.examId);
-      console.log(action.payload.pointOfMe);
-      exam.pointsOfMe = action.payload.pointOfMe;
+      console.log(action.payload?.pointOfMe);
+      exam.pointsOfMe = action.payload?.pointOfMe;
     },
     deleteExam: (state, action) => {
       const exam = state.examList.findIndex((exam) => exam.id === action.payload);
@@ -25,6 +25,6 @@ export const examListSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { updatePoints } = examListSlice.actions;
+export const { updatePoints, addExam, deleteExam } = examListSlice.actions;
 
 export default examListSlice.reducer;

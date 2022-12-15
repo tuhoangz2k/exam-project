@@ -12,9 +12,9 @@ export const USERS = [
     username: 'admin123',
     password: '123456',
     power: 'admin',
-    points: 1000,
+    points: 0,
   },
-  { id: 'user1', username: 'user123', password: '123456', power: 'user', points: 18000 },
+  { id: 'user1', username: 'user123', password: '123456', power: 'user', points: 0 },
 ];
 
 export const EXAMLIST = [
